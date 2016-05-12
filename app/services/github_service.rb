@@ -6,7 +6,9 @@ class GithubService
     @access_token = access_hash["access_token"] if access_hash
   end
 
-  def authenticate!(client_id, client_secret, code)
+  def authenticate!(code)
+    client_id = ENV['GITHUB_CLIENT']
+    client_secret = ENV['GITHUB_SECRET']
     response = Faraday.post "https://github.com/login/oauth/access_token",
         {client_id: client_id, client_secret: client_secret, code: code},
         {'Accept' => 'application/json'}
